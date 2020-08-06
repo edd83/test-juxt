@@ -49,11 +49,12 @@ function getData() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log(url);
+                    console.debug(url);
                     return [4 /*yield*/, getJSON(url)];
                 case 1:
                     obj = _a.sent();
-                    return [2 /*return*/, obj];
+                    console.debug(obj);
+                    return [2 /*return*/, "Current weather - " + obj.currently.summary + ", Today we will see - " + obj.hourly.summary + " with a " + obj.currently.precipProbability + "% chance of rain."];
             }
         });
     });
