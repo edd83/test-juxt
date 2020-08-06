@@ -1,0 +1,32 @@
+{
+  "name": "test-juxt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest",
+    "deploy": "npm install && npm run build",
+    "build": "tsc index.ts && npm link",
+    "clean": "rm -f index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "weather": "./cli.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "babel-jest": "^26.2.2",
+    "jest": "^26.2.2",
+    "ts-jest": "^26.1.4"
+  },
+  "dependencies": {
+    "bent": "^7.3.9",
+    "typescript": "^3.9.7"
+  }
+}
