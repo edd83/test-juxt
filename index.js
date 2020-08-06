@@ -40,40 +40,68 @@ exports.main = void 0;
 var bent = require('bent');
 var getJSON = bent('json');
 var TOKEN = '1f9fcb72e6b5d043a34b34bc5f4f86e1';
-var lat = 60.59329987;
-var long = -1.44250533;
-var url = "https://api.darksky.net/forecast/" + TOKEN + "/" + lat + "," + long;
-function getData() {
+function messageFormat(obj) {
+    return "Current weather - " + obj.currently.summary + ", Today we will see - " + obj.hourly.summary + " with a " + obj.currently.precipProbability + "% chance of rain.";
+}
+function getWeather(lat, lng) {
     return __awaiter(this, void 0, void 0, function () {
-        var obj;
+        var url, obj;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.debug(url);
+                    url = "https://api.darksky.net/forecast/" + TOKEN + "/" + lat + "," + lng;
                     return [4 /*yield*/, getJSON(url)];
                 case 1:
                     obj = _a.sent();
-                    console.debug(obj);
-                    return [2 /*return*/, "Current weather - " + obj.currently.summary + ", Today we will see - " + obj.hourly.summary + " with a " + obj.currently.precipProbability + "% chance of rain."];
+                    if (!obj) {
+                        console.log('efdweiufhiwehfuihweiuhfiuwehfiuhewiuhfiowehfiuhweihf');
+                        throw new Error('An error occured when requesting weather api');
+                    }
+                    throw new Error('blalbla');
+            }
+        });
+    });
+}
+function getCityInfo(city) {
+    return __awaiter(this, void 0, void 0, function () {
+        var obj, location, message;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, getJSON('https://raw.githubusercontent.com/lutangar/cities.json/master/cities.json')];
+                case 1:
+                    obj = _a.sent();
+                    if (!obj) {
+                        throw new Error('An error occured when requesting cities json');
+                    }
+                    location = obj.filter(function (elem) { return elem.name === city; });
+                    if (location.length === 0) {
+                        throw new Error('City entered in paramteter does not exist');
+                    }
+                    return [4 /*yield*/, getWeather(location[0].lat, location[0].lng)];
+                case 2:
+                    message = _a.sent();
+                    return [2 /*return*/, message];
             }
         });
     });
 }
 function main(args) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, _b, e_1;
+        var _a, _b, err_1;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
                     _c.trys.push([0, 2, , 3]);
+                    // console.log(await getWeather(60.59329987, -1.44250533));
                     _b = (_a = console).log;
-                    return [4 /*yield*/, getData()];
+                    return [4 /*yield*/, getCityInfo(args[0])];
                 case 1:
+                    // console.log(await getWeather(60.59329987, -1.44250533));
                     _b.apply(_a, [_c.sent()]);
                     return [3 /*break*/, 3];
                 case 2:
-                    e_1 = _c.sent();
-                    console.error(e_1);
+                    err_1 = _c.sent();
+                    console.error(err_1);
                     return [3 /*break*/, 3];
                 case 3: return [2 /*return*/];
             }
